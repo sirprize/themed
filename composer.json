@@ -1,7 +1,7 @@
 {
     "name": "sirprize/themed",
     "type": "theme",
-    "description": "Default theme for Scribbled noteblog app",
+    "description": "Default theme for Scribbled",
     "keywords": ["theme", "responsive", "mobile", "html", "css"],
     "homepage": "http://scribbled.io",
     "license": "MIT",
