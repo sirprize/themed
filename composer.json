@@ -1,0 +1,11 @@
+{
+    "name": "sirprize/themed",
+    "type": "theme",
+    "description": "Default theme for Scribbled noteblog app",
+    "keywords": ["theme", "responsive", "mobile", "html", "css"],
+    "homepage": "http://scribbled.io",
+    "license": "MIT",
+    "authors": [
+        { "name": "Christian Hoegl", "email": "chrigu@sirprize.me" }
+    ]
+}
