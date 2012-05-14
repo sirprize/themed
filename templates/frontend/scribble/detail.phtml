@@ -1,6 +1,5 @@
 <?php
-    $env = $services->get('env');
-    $defaults = $services->get('defaults');
+    $theme = $services->get('theme');
     $facebook = $services->get('facebook');
     $urler = $services->get('urler');
     $request = $services->get('request');
@@ -9,15 +8,11 @@
     // final massage of scribble content
     // replace some php scribble getters with their value
     $find = array(
-        '/&lt;\?php echo \$scribble-&gt;getPath\(\); \?&gt;/',
-        '/&lt;\?php echo \$env-&gt;getBasePath\(\); \?&gt;/',
-        '/&lt;\?php echo \$env-&gt;getVendorMediaPath\(\); \?&gt;/'
+        '/&lt;\?php echo \$scribble-&gt;getPath\(\); \?&gt;/'
     );
 
     $replace = array(
-        $scribble->getPath(),
-        $env->getBasePath(),
-        $env->getVendorMediaPath()
+        $scribble->getPath()
     );
 
     $scribbleContent = preg_replace($find, $replace, $scribble->getContent());
@@ -35,19 +30,20 @@
         <meta name="description" content="<?php echo implode(' ', $scribble->getTags()->toArray()); ?>">
         <meta name="description" content="<?php echo htmlspecialchars($scribble->getLede(), ENT_COMPAT); ?>">
         <meta name="viewport" content="width=device-width">
-        <link rel="stylesheet" href="<?php echo $env->getMediaPath(); ?>/styles/site/css/frontend/global.css">
-        <?php echo $view->render('frontend/_partials/modernizr.phtml', array('vendorMediaPath' => $env->getVendorMediaPath())); ?>
+        <link rel="stylesheet" href="<?php echo $theme->getMediaPath(); ?>/styles/site/css/frontend/global.css">
+        <?php echo $view->render('frontend/_partials/modernizr.phtml', array('mediaPath' => $theme->getMediaPath())); ?>
+        <?php echo $view->render('frontend/_partials/icons.phtml', array('mediaPath' => $theme->getMediaPath())); ?>
         
         <?php if($facebook->getItem("appId")): ?>
-            <meta property="fb:app_id" content="<?php echo $defaults->getItem("facebookAppId"); ?>" />
-            <meta property="fb:admins" content="<?php echo $defaults->getItem("facebookAdmins"); ?>" />
+            <meta property="fb:app_id" content="<?php echo $facebook->getItem("appId"); ?>" />
+            <meta property="fb:admins" content="<?php echo $facebook->getItem("admins"); ?>" />
             <meta property="og:url" content="<?php echo $canonicalUrl; ?>" />
             <meta property="og:title" content="<?php echo $scribble->getTitle(); ?>" />
 
             <?php if($scribble->getImage()): ?>
                 <meta property="og:image" content="http://<?php echo $_SERVER['HTTP_HOST']; ?><?php echo $scribble->getPath(); ?>/<?php echo $scribble->getImage(); ?>" />
             <?php else: ?>
-                <meta property="og:image" content="<?php echo $defaults->getItem('scribbleImage'); ?>" />
+                <meta property="og:image" content="<?php echo $theme->getItem('scribbleImage'); ?>" />
             <?php endif; ?>
 
             <meta property="og:type" content="article" />
@@ -72,9 +68,8 @@
                 echo $view->render(
                     'frontend/_partials/top.phtml',
                     array(
-                        'env' => $env,
+                        'theme' => $theme,
                         'urler' => $urler,
-                        'defaults' => $defaults,
                         'request' => $request
                     )
                 );
@@ -95,12 +90,12 @@
                 
                 <div class="scribbled-scribble-meta">
                     <time datetime="<?php echo $scribble->getCreated()->format('Y-m-d'); ?>" class="created">
-                        <?php echo $scribble->getCreated()->format($defaults->getItem('dateFormat')); ?>
+                        <?php echo $scribble->getCreated()->format($theme->getItem('dateFormat')); ?>
                     </time>
                     
                     <?php if($scribble->getCreated() != $scribble->getModified()): ?>
                         <time datetime="<?php echo $scribble->getModified()->format('Y-m-d'); ?>" class="modified">
-                            <?php echo $scribble->getModified()->format($defaults->getItem('dateFormat')); ?> (updated)
+                            <?php echo $scribble->getModified()->format($theme->getItem('dateFormat')); ?> (updated)
                         </time>
                     <?php endif; ?>
                     
@@ -120,7 +115,7 @@
                 </div>
             </article>
             
-            <?php if($defaults->getItem('enableSocialPlugins', false)): ?>
+            <?php if($facebook->getItem("appId")): ?>
                 <div class="facebook">
                     <?php if($facebook->getItem("appId")): ?>
                         <div class="fb-like" data-href="<?php echo $canonicalUrl; ?>" data-layout="standard" data-send="true" data-width="420" data-show-faces="true"></div><br />
@@ -148,7 +143,9 @@
                         </script>
                     <?php endif; ?>
                 </div>
-                
+            <?php endif; ?>
+            
+            <?php if($theme->getItem('enableTwitterAndPlusOne', false)): ?>
                 <div class="twitter-plus-one">
                     <a href="https://twitter.com/share" class="twitter-share-button" data-size="large">Tweet</a>
                     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
@@ -171,7 +168,7 @@
                 echo $view->render(
                     'frontend/_partials/bottom.phtml',
                     array(
-                        'env' => $env,
+                        'theme' => $theme,
                         'urler' => $urler
                     )
                 );

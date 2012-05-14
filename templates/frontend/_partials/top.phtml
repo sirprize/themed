@@ -1,5 +1,5 @@
 <?php
-    $findParam = $defaults->getItem('findParam', 'find');
+    $findParam = $theme->getItem('findParam', 'find');
     $route = $request->attributes->get('_route');
     $classScribbles = ($route == 'frontendScribbleIndex' || $route == 'frontendScribbleDetail' || $route == 'frontendScribbleTag') ? 'on' : 'off';
     $classTags = ($route == 'frontendTagIndex') ? 'on' : 'off';
@@ -7,7 +7,7 @@
 
 <header class="scribbled-site-header">
     <a href="<?php echo $urler->generate('frontendScribbleIndex'); ?>">
-        <img src="<?php echo $env->getMediaPath(); ?>/images/header.png" alt="Scribbled" />
+        <img src="<?php echo $theme->getItem('headerGraphic'); ?>" alt="Scribbled" />
     </a>
 </header>
 

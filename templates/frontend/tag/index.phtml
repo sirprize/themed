@@ -1,6 +1,5 @@
 <?php
-    $env = $services->get('env');
-    $defaults = $services->get('defaults');
+    $theme = $services->get('theme');
     $urler = $services->get('urler');
     $request = $services->get('request');
     $order = ($request->query->get('order') == 'count') ? 'count' : 'alpha';
@@ -14,11 +13,12 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title><?php echo $defaults->getItem('siteTitle'); ?></title>
+        <title><?php echo $theme->getItem('siteTitle'); ?></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-        <link rel="stylesheet" href="<?php echo $env->getMediaPath(); ?>/styles/site/css/frontend/global.css">
-        <script src="<?php echo $env->getVendorMediaPath(); ?>/modernizr/modernizr-2.5.3.min.js"></script>
+        <link rel="stylesheet" href="<?php echo $theme->getMediaPath(); ?>/styles/site/css/frontend/global.css">
+        <?php echo $view->render('frontend/_partials/modernizr.phtml', array('mediaPath' => $theme->getMediaPath())); ?>
+        <?php echo $view->render('frontend/_partials/icons.phtml', array('mediaPath' => $theme->getMediaPath())); ?>
     </head>
     <body>
         <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
@@ -28,9 +28,8 @@
                 echo $view->render(
                     'frontend/_partials/top.phtml',
                     array(
-                        'env' => $env,
+                        'theme' => $theme,
                         'urler' => $urler,
-                        'defaults' => $defaults,
                         'request' => $request
                     )
                 );
@@ -77,7 +76,7 @@
                 echo $view->render(
                     'frontend/_partials/bottom.phtml',
                     array(
-                        'env' => $env,
+                        'theme' => $theme,
                         'urler' => $urler
                     )
                 );

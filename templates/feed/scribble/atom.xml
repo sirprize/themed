@@ -1,10 +1,10 @@
 <?php
-    $defaults = $services->get('defaults');
+    $theme = $services->get('theme');
     $urler = $services->get('urler');
 
     $feedUrl
-        = ($defaults->getItem('siteFeedUrl'))
-        ? $defaults->getItem('siteFeedUrl')
+        = ($theme->getItem('siteFeedUrl'))
+        ? $theme->getItem('siteFeedUrl')
         : $urler->generate('feedScribbleIndex', array(), true)
     ;
 
@@ -20,17 +20,17 @@
 <?php echo '<?xml version="1.0" encoding="utf-8"?>'; ?>
 
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <title><?php echo $defaults->getItem('siteTitle'); ?></title>
-    <subtitle><?php echo $defaults->getItem('siteDescription'); ?></subtitle>
+    <title><?php echo $theme->getItem('siteTitle'); ?></title>
+    <subtitle><?php echo $theme->getItem('siteDescription'); ?></subtitle>
     <link href="<?php echo $feedUrl; ?>" rel="self"/>
     <link href="<?php echo $url; ?>"/>
     <updated><?php echo $updated->format('c'); ?></updated>
 
-    <?php if($defaults->getItem('siteOwnerName')): ?>
+    <?php if($theme->getItem('siteOwnerName')): ?>
         <author>
-            <name><?php echo $defaults->getItem('siteOwnerName'); ?></name>
-            <?php if($defaults->getItem('siteOwnerMail')): ?>
-                <email><?php echo $defaults->getItem('siteOwnerMail'); ?></email>
+            <name><?php echo $theme->getItem('siteOwnerName'); ?></name>
+            <?php if($theme->getItem('siteOwnerMail')): ?>
+                <email><?php echo $theme->getItem('siteOwnerMail'); ?></email>
             <?php endif; ?>
         </author>
     <?php endif; ?>

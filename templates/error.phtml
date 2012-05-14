@@ -1,6 +1,5 @@
 <?php
-    $env = $services->get('env');
-    $defaults = $services->get('defaults');
+    $theme = $services->get('theme');
     $urler = $services->get('urler');
     $request = $services->get('request');
     
@@ -22,8 +21,9 @@
         <title><?php echo $title; ?></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-        <link rel="stylesheet" href="<?php echo $env->getMediaPath(); ?>/styles/site/css/frontend/global.css">
-        <?php echo $view->render('frontend/_partials/modernizr.phtml', array('vendorMediaPath' => $env->getVendorMediaPath())); ?>
+        <link rel="stylesheet" href="<?php echo $theme->getMediaPath(); ?>/styles/site/css/frontend/global.css">
+        <?php echo $view->render('frontend/_partials/modernizr.phtml', array('mediaPath' => $theme->getMediaPath())); ?>
+        <?php echo $view->render('frontend/_partials/icons.phtml', array('mediaPath' => $theme->getMediaPath())); ?>
     </head>
     <body>
         <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
@@ -33,9 +33,8 @@
                 echo $view->render(
                     'frontend/_partials/top.phtml',
                     array(
-                        'env' => $env,
+                        'theme' => $theme,
                         'urler' => $urler,
-                        'defaults' => $defaults,
                         'request' => $request
                     )
                 );
@@ -51,7 +50,7 @@
                 <p>Sorry, something went wrong</p>
             <?php endif; ?>
             
-            <?php if($env->debug()): ?>
+            <?php if($theme->debug()): ?>
                 <div class="exception">
                     <?php /*echo preg_replace('/(#\d+)/', "<br />$1", $exception->getTraceAsString());*/ ?>
                     <?php echo $exception->getMessage(); ?><br />
@@ -68,7 +67,7 @@
                 echo $view->render(
                     'frontend/_partials/bottom.phtml',
                     array(
-                        'env' => $env,
+                        'theme' => $theme,
                         'urler' => $urler
                     )
                 );
