@@ -29,7 +29,7 @@
     <body>
         <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
         
-        <div class="top">
+        <div id="top">
             <?php
                 echo $view->render(
                     'frontend/_partials/top.phtml',
@@ -42,7 +42,7 @@
             ?>
         </div>
         
-        <div role="main" class="content scribble-index-content">
+        <div role="main"  id="content" class="scribble-index-content">
             <?php if(count($scribbles->getCriteria()->getTags())): ?>
                 <div class="scribbled-breadcrumbs">
                     <h2>Selected tags <a href="<?php echo $urler->generate('frontendScribbleIndex'); ?>">Clear</a></h2>
@@ -161,7 +161,7 @@
             <?php endif; ?>
         </div>
     
-        <div class="bottom">
+        <div id="bottom">
             <?php
                 echo $view->render(
                     'frontend/_partials/bottom.phtml',
