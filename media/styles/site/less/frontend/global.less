@@ -39,8 +39,8 @@ ol, ul {
 ////////////////////////////////////////////////////////////////////////////////
 
 // Base colour
-@color: #dfef28;
-@compl: #4183C4;
+@color1: #dfef28;
+@color2: #4183C4;
 
 // greys
 @grey0: lighten(#000, 95%);
@@ -53,6 +53,9 @@ ol, ul {
 @grey7: lighten(#000, 30%);
 @grey8: lighten(#000, 20%);
 @grey9: lighten(#000, 10%);
+
+// border
+@border: 2px;
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -73,7 +76,7 @@ ol, ul {
         }
     }
     
-    #rounded-corners (@radius) {
+    #border-radius (@radius) {
         -webkit-border-radius: @radius;
         -moz-border-radius: @radius;
         -ms-border-radius: @radius;
@@ -81,24 +84,40 @@ ol, ul {
         border-radius: @radius;
     }
     
+    #border-bottom-left-radius (@radius) {
+        -webkit-border-bottom-left-radius: @radius;
+        -moz-border-bottom-left-radius: @radius;
+        -ms-border-bottom-left-radius: @radius;
+        -o-border-bottom-left-radius: @radius;
+        border-bottom-left-radius: @radius;
+    }
+    
+    #border-bottom-right-radius (@radius) {
+        -webkit-border-bottom-right-radius: @radius;
+        -moz-border-bottom-right-radius: @radius;
+        -ms-border-bottom-right-radius: @radius;
+        -o-border-bottom-right-radius: @radius;
+        border-bottom-right-radius: @radius;
+    }
+    
     #tag (@colorOff, @bgOff, @colorOn, @bgOn) {
         line-height: 2;
         padding: .25em .55em;
-        #mixin > #rounded-corners(4/16em);
+        #mixin > #border-radius(.25em);
         background: @bgOff;
         color: @colorOff;
         text-decoration: none;
-        
+         
         &:visited {
             color: @colorOff;
         }
-        
+         
         &:hover {
             background: @bgOn;
             color: @colorOn;
             text-decoration: none;
         }
-        
+         
         span {
             font-size: .8em;
             font-weight: bold;
@@ -106,7 +125,7 @@ ol, ul {
             margin-left: .5em;
             background: white;
             padding: .2em .45em .1em .45em;
-            #mixin > #rounded-corners(11/16em);
+            #mixin > #border-radius(11/16em);
         }
     }
 
@@ -133,11 +152,11 @@ ol, ul {
     }
     
     #regular-tag () {
-         #mixin > #tag(white, @grey3, white, @grey8);
+        #mixin > #tag(white, @grey3, white, @grey8);
     }
     
     #highlighted-tag () {
-         #mixin > #tag(white, @compl, white, @grey8);
+        #mixin > #tag(white, @color2, white, @grey8);
     }
     
     #lighter-tag () {
@@ -150,32 +169,50 @@ ol, ul {
 ////////////////////////////////////////////////////////////////////////////////
 
 a, a:visited {
-    color: @compl;
+    color: @color2;
     text-decoration: none;
 }
 
 a:hover {
-    color: @compl;
+    color: @color2;
     text-decoration: underline;
 }
 
-::-moz-selection { background: #4183C4; color: white; text-shadow: none; }
-::selection { background: #4183C4; color: white; text-shadow: none; }
+::-moz-selection { background: @color2; color: white; text-shadow: none; }
+::selection { background: @color2; color: white; text-shadow: none; }
+
+img.fluid {
+    max-width: 100%;
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 ////// widgets
 ////////////////////////////////////////////////////////////////////////////////
 
-.scribbled-site-header {
+.scribbled-about {
+    #mixin > #clearfix();
+    
+    text-align: center;
+    font: 1em 'Bitstream Vera Sans Mono','Courier',monospace;
+    
+    a {
+        font-weight: bold;
+    }
+    
     img {
-        max-width: 100%;
+        float: left;
+        padding-right: 2em;
+        padding-bottom: 1em;
+    }
+    
+    p {
+        border: 0;
+        margin: 0;
+        padding: 1.2em 0 0 0;
     }
 }
 
-
 .scribbled-site-nav {
-    background: black;
-    
     ul {
         margin: 0;
         padding: 0;
@@ -190,14 +227,10 @@ a:hover {
             white-space: nowrap;
             display: inline;
             float: left;
-            padding-left: 1em;
+            padding-left: 0;
             padding-right: 1em;
         }
-
-        li:first-child, ul li.first {
-            padding-left: 0;
-        }
-        
+         
         li:last-child {
             padding-right: 0;
         }
@@ -205,37 +238,45 @@ a:hover {
         li.last {
             padding-right: 0;
         }
-        
+         
         li.on {
             a, a:visited {
-                color: @color;
+                color: @color2;
             }
         }
 
         a, a:visited {
-            color: white;
+            color: black;
             text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2em;
+            
+            span {
+                visibility: hidden;
+                color: black;
+                margin-left: .2em;
+            }
         }
-        
+         
         a:hover {
-            color: @color;
+            color: @color2;
+            span {
+                visibility: visible;
+            }
         }
     }
 }
 
 
 .scribbled-site-search {
-    background: black;
-    
     form {
         input {
             border: 0;
-            padding: .4em .3em .4em 2.4em;
-            width: 10em;
-            #mixin > #rounded-corners(.25em);
-            background-image: url(../../../../images/search.png);
-            background-repeat: no-repeat;
-            background-position: .35em .175em;
+            padding: .4em .3em .4em .4em;
+            width: 8em;
+            background-color: white;
+            border-left: 1em solid #eee;
+            font: 1em 'Bitstream Vera Sans Mono','Courier',monospace;
         }
     }
 }
@@ -257,13 +298,13 @@ a:hover {
         padding: 0;
         border: 0;
         font-size: 1em;
-        
+         
         a, a:visited {
             font-size: .7em;
             color: @grey3;
             text-decoration: none;
         }
-        
+         
         a:hover {
             color: @grey8;
         }
@@ -289,7 +330,7 @@ a:hover {
     
     ul {
         #mixin > #tags();
-        
+         
         .scribbled-tag {
             #mixin > #highlighted-tag();
         }
@@ -303,7 +344,7 @@ a:hover {
     ul {
         float: left;
         #mixin > #tags();
-        
+         
         .tag {
             #mixin > #regular-tag();
         }
@@ -321,7 +362,7 @@ a:hover {
     color: white;
     padding: .2em .5em;
     margin-bottom: .5em;
-    #mixin > #rounded-corners(4/16em);
+    #mixin > #border-radius(.25em);
 }
 
 
@@ -345,7 +386,6 @@ a:hover {
 
 
 .scribbled-scribbles {
-    
     ul.scribbles {
         margin: 0;
         padding: 0;
@@ -356,9 +396,9 @@ a:hover {
             list-style-type: none;
             padding-bottom: 1.2em;
             margin-bottom: 1.2em;
-            border-bottom: 2px dashed @grey5;
+            border-bottom: @border dashed @grey5;
         }
-        
+         
         li.scribble:last-child {
             border-bottom: 0;
             margin-bottom: 0;
@@ -375,23 +415,23 @@ a:hover {
 .scribbled-paginator {
     form {
         input {
-           text-align: center;
-           width: 1.2em;
-           border: 0;
+            text-align: center;
+            width: 1.2em;
+            border: 0;
         }
-        
+         
         .previous-page, .next-page {
             #mixin > #highlighted-tag();
         }
-        
+         
         .previous-page {
             margin-right: 1em;
         }
-        
+         
         .next-page {
             margin-left: 1em;
         }
-        
+         
         span, input {
             font-weight: bold;
         }
@@ -401,22 +441,22 @@ a:hover {
 
 .scribbled-scribble-data {
     h2 {
-        border-bottom: 1px solid #ccc;
+        border-bottom: @border dashed @grey5;
     }
     
     blockquote {
         margin: 0;
         padding-left: 1em;
-        border-left: 4px solid #ccc;
-        color: #777777;
+        border-left: 4px solid @grey2;
+        color: @grey5;
     }
     
     pre {
-        border: 1px solid #EAEAEA;
+        border: 1px solid @grey1;
         background: #F8F8F8;
         overflow: auto;
         padding: 1.2em 1.2em;
-        
+         
         code {
             border: 0;
             padding: 0;
@@ -428,8 +468,8 @@ a:hover {
     }
     
     code {
-        border: 1px solid #EAEAEA;
-        color: #666;
+        border: 1px solid @grey1;
+        color: @grey5;
         background: #F8F8F8;
         padding: 0 .4em;
         font: .8em 'Bitstream Vera Sans Mono','Courier',monospace;
@@ -440,26 +480,44 @@ a:hover {
 ////// small screen layout
 ////////////////////////////////////////////////////////////////////////////////
 
-@media only screen and (max-width: 320px) {
+@media only screen and (max-width: 480px) {
     body {
         background: white;
         margin: 0;
     }
     
     #top {
-        .scribbled-site-header {
-            display: none;
+        .scribbled-about {
+            margin: 0;
             padding: 1em;
-            text-align: center;
-        }
-
-        .site-nav {
-            .scribbled-site-nav {
-                padding: .5em 1em;
+            
+            img {
+                display: none;
             }
+            
+            p {
+                margin: 0;
+                padding: 0;
+                text-align: left;
+            }
+        }
         
+        .site-nav {
+            #mixin > #clearfix();
+            background: @color1;
+            border-top: .7em solid @color2;
+            border-bottom: .7em solid black;
+            padding: .7em 1em;
+         
             .scribbled-site-search {
-                padding: .5em 1em 1em 1em;
+                margin-top: .7em;
+                
+                form {
+                    input {
+                        border-left: 0;
+                        border-right: 1em solid #eee;
+                    }
+                }
             }
         }
     }
@@ -467,7 +525,7 @@ a:hover {
     #content {
         padding: 1em;
         overflow: hidden;
-        
+         
         .main-title {
             margin: .5em 0;
             border: 0;
@@ -490,7 +548,7 @@ a:hover {
     .scribble-index-content {
         .scribbled-breadcrumbs {
             margin: .5em 0 2em 0;
-        
+         
             .scribbled-tags {
                 margin-bottom: .5em;
             }
@@ -506,15 +564,15 @@ a:hover {
         .scribbled-scribble-meta {
             margin-top: 1em;
             padding-top: 1em;
-            border-top: 2px dashed @grey5;
+            border-top: @border dashed @grey5;
         }
-        
+         
         .facebook {
             margin-top: 1em;
-            border-top: 2px dashed @grey5;
+            border-top: @border dashed @grey5;
             padding-top: 1em;
         }
-        
+         
         .twitter-plus-one {
             margin-top: 1em;
             border-top: 1px solid @grey2;
@@ -533,29 +591,25 @@ a:hover {
 ////// large(r) screen layout
 ////////////////////////////////////////////////////////////////////////////////
 
-@media only screen and (min-width: 321px) {
-    html {
-       background: @color;
-    }
-    
+@media only screen and (min-width: 481px) {
     body {
         width: 80%;
-        max-width: 60em;
+        max-width: 50em;
         margin: 0 auto;
     }
     
     #top {
-        background: white;
-        
-        .scribbled-site-header {
-            padding: 2em;
-            background: white;
+        .scribbled-about {
+            margin: 1em 0;
+            padding: 0;
         }
-
+        
         .site-nav {
             #mixin > #clearfix();
+            background: @color1;
+            border-top: 1em solid @color2;
+            border-bottom: 1em solid black;
             padding: .5em 0 0 0;
-            background: black;
             
             .scribbled-site-nav {
                 float: left;
@@ -563,10 +617,10 @@ a:hover {
                 top: .2em;
                 padding: .5em 1em;
             }
-        
+         
             .scribbled-site-search {
                 float: right;
-                padding: .5em 1em 1em 1em;
+                padding: .5em 0em 1em 1em;
             }
         }
     }
@@ -575,7 +629,7 @@ a:hover {
         padding: 2em;
         background: white;
         overflow: hidden;
-        
+         
         .main-title {
             margin: 0;
             border: 0;
@@ -584,30 +638,31 @@ a:hover {
     }
     
     #bottom {
-        background: white;
-        
         .bar {
-            padding: 1.2em 1em;
-            background: black;
+            padding: .5em;
+            border-top: 1em solid @color2;
+            border-bottom: 1em solid black;
+            background: @color1;
+            text-align: center;
         }
 
         .scribbled-site-footer {
-            padding: 1em 1em;
-            text-align: right;
+            padding: 1em .5em 2em .5em;
+            text-align: center;
         }
     }
     
     .scribble-index-content {
         .scribbled-breadcrumbs {
             margin-bottom: 2em;
-            
+             
             .scribbled-related-tags {
                 margin-top: 1em;
             }
         }
     
         .scribbled-paginator {
-            margin: .5em 0 2em 0;
+            margin: .5em 0 1em 0;
             padding-top: 1em;
         }
     }
@@ -616,15 +671,15 @@ a:hover {
         .scribbled-scribble-meta {
             margin-top: 2em;
             padding-top: 1em;
-            border-top: 2px dashed @grey5;
+            border-top: @border dashed @grey5;
         }
-        
+         
         .facebook {
             margin-top: 1em;
-            border-top: 2px dashed @grey5;
+            border-top: @border dashed @grey5;
             padding-top: 1em;
         }
-        
+         
         .twitter-plus-one {
             margin-top: 1em;
             border-top: 1px solid @grey2;

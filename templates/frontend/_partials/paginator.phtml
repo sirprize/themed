@@ -5,7 +5,7 @@
         <?php endforeach; ?>
 
         <?php if($paginator->getCurrentPage() > 1): ?>
-            <a href="<?php echo $paginator->getPreviousPageUrl(); ?>" class="previous-page" rel="prev">{{</a>
+            <a href="<?php echo $paginator->getPreviousPageUrl(); ?>" class="previous-page" rel="prev">- -</a>
         <?php endif; ?>
 
         <span>Page</span>
@@ -13,7 +13,7 @@
         <span>of <?php echo $paginator->getNumPages(); ?></span>
 
         <?php if($paginator->getCurrentPage() < $paginator->getNumPages()): ?>
-             <a href="<?php echo $paginator->getNextPageUrl(); ?>" class="next-page" rel="next">}}</a>
+             <a href="<?php echo $paginator->getNextPageUrl(); ?>" class="next-page" rel="next">++</a>
         <?php endif; ?>
     </fieldset>
 </form>

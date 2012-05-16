@@ -1,25 +1,30 @@
 <?php
     $findParam = $theme->getItem('findParam', 'find');
     $route = $request->attributes->get('_route');
+    
+    $aboutUrl = $urler->generate('frontendPageIndex', array('slug' => 'about'));
     $classScribbles = ($route == 'frontendScribbleIndex' || $route == 'frontendScribbleDetail' || $route == 'frontendScribbleTag') ? 'on' : 'off';
     $classTags = ($route == 'frontendTagIndex') ? 'on' : 'off';
+    $classAbout = ($route == 'frontendPageIndex' && $request->getPathInfo() == $aboutUrl) ? 'on' : 'off';
 ?>
 
-<header class="scribbled-site-header">
-    <a href="<?php echo $urler->generate('frontendScribbleIndex'); ?>">
-        <img src="<?php echo $theme->getItem('headerGraphic'); ?>" alt="Scribbled" />
-    </a>
-</header>
+<div class="scribbled-about">
+    <?php echo htmlspecialchars($theme->getItem('headerAboutText')); ?>
+</div>
 
 <div class="site-nav">
     <div class="scribbled-site-nav">
         <ul>
             <li class="first <?php echo $classScribbles; ?>">
-                <a href="<?php echo $urler->generate('frontendScribbleIndex'); ?>">Scribbles</a>
+                <a href="<?php echo $urler->generate('frontendScribbleIndex'); ?>">Scribbles<span>( )</span></a>
             </li>
             
-            <li class="last <?php echo $classTags; ?>">
-                <a href="<?php echo $urler->generate('frontendTagIndex'); ?>">Tags</a>
+            <li class="<?php echo $classTags; ?>">
+                <a href="<?php echo $urler->generate('frontendTagIndex'); ?>">Tags<span>( )</span></a>
+            </li>
+            
+            <li class="last <?php echo $classAbout; ?>">
+                <a href="<?php echo $aboutUrl; ?>">About<span>( )</span></a>
             </li>
         </ul>
     </div>
