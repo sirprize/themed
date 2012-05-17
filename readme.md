@@ -1,6 +1,6 @@
 # Themed
 
-Default theme for [Scribbled](https://github.com/sirprize/scribbled)
+Default theme for the [Scribbled](http://scribbled.io) noteblog app.
 
 ## License
 
