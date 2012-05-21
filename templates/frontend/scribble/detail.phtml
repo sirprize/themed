@@ -24,7 +24,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title><?php echo $scribble->getTitle(); ?></title>
-        <meta name="description" content="<?php echo implode(' ', $scribble->getTags()->toArray()); ?>">
+        <meta name="keywords" content="<?php echo implode(' ', $scribble->getTags()->toArray()); ?>">
         <meta name="description" content="<?php echo htmlspecialchars($scribble->getLede(), ENT_COMPAT); ?>">
         <meta name="viewport" content="width=device-width">
         <link rel="stylesheet" href="<?php echo $theme->getMediaPath(); ?>/styles/site/css/frontend/global.css">
